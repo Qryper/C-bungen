@@ -22,7 +22,7 @@ int main(void){
 	char input[100];
 	int out[100];
 	fgets (input, 100, stdin);
-	for(int i=0; i<sizeof(input); i=i+2){
+	for(int i=0; i<sizeof(input); i=i+3){
 		char current = input[i];
 		char next = input[i+1];
 		int decNumber;
