@@ -33,13 +33,11 @@ typedef union MyFloat MyFloat;
 
 int main(void){
 	MyFloat f;
-	f.f = -1.0f;				// falsch, da little Endian verwendet wurde (Reihenfolge der Var Decl.)
+	f.f = -1.0f;				//erst falsch, da little Endian verwendet wurde (Reihenfolge der Var Decl.)
 
 	printf("raw s =%x\n", f.raw.s);
 	printf("raw e =%x\n", f.raw.e);
 	printf("raw m =%x\n", f.raw.m);
-
-
 
 }
 
