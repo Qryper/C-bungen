@@ -7,26 +7,26 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-int average(int account,...){
+float average(int amount,...){
 	va_list myList;
-	va_start(myList,account);
-	int myArg = 0;
-	for(int i=0; i<account;i++){
+	va_start(myList,amount);
+	float myArg = 0;
+	for(int i=0; i<amount;i++){
 		myArg += va_arg(myList, int);
 	}
 	va_end(myList);
-	if(account!=0)
-		myArg = myArg/account;
+	if(amount!=0)
+		myArg = myArg/amount;
 	return myArg;
 }
 
-int minimum(int account,...){
+int minimum(int amount,...){
 	va_list myList;
-	va_start(myList,account);
-	if(account!=0){
+	va_start(myList,amount);
+	if(amount!=0){
 	 int min = va_arg(myList, int);
 	 int myArg = 0;
-	 for(int i=0; i<account;i++){
+	 for(int i=0; i<amount;i++){
 		myArg = va_arg(myList, int);
 		if(myArg < min)
 			min = myArg;
@@ -39,6 +39,6 @@ int minimum(int account,...){
 }
 
 int main(void){
-printf("%d\n",average(5,4,3,23,2,5));
+printf("%f\n",average(5,4,3,23,2,5));
 printf("%d\n",minimum(5,22,2,3,4,5));
 }
