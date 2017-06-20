@@ -15,37 +15,23 @@ ArrayList::~ArrayList()
   delete[] array;
 }
 
-ArrayList::ArrayList(const ArrayList& a){
-	array = a.*array;
-	current_size = a.current_size;
-}
+ArrayList::ArrayList(const ArrayList& a) : current_size(a.current_size), array(new int[current_size]){
+/*	array = new int [a.current_size];
+	current_size = a.current_size;  */
 
-ArrayList::ArrayList& operator= (const ArrayList& rhs){
-	if(this!= &rhs){
-		delete ArrayList::array;
-		delete ArrayList::current_size;
-		ArrayList::array = rhs.array;
-		ArrayList::current_size = rhs.current_size;
+	for(int index = 0; index <a.current_size; index ++){
+		this->add(a.get(index),index);
+		//array[index]= a.array[index]
 	}
-	return *this;
+	//std::copy(other.array, other.array+curent_size, array); (anstatt for)
+
 }
 
-ArrayList::ArrayList(ArrayList&& other){
-	other.array = NULL;
-	other.current_size = NULL;
+ArrayList::ArrayList(ArrayList&& other) : current_size(other.current_size) , array(other.array){
+	other.array = nullptr; //damit Destruktor nicht aufgerufen wird und die Daten vom Pointer mit löscht
+	//NULL ist Makro (void*) 0 und nicht Nullptr
 }
 
-ArrayList::ArrayList& operator=(ArrayList&& other){
-	if(this != &other){
-		delete ArrayList::array;
-		delete ArrayList::current_size;
-		ArrayList::array = other.array;
-		ArrayList::current_size = other.current_size;
-		other.array = NULL;
-		other.current_size = NULL;
-	}
-	return *this;
-}
 const int*
 ArrayList::getFirst() const
 {
