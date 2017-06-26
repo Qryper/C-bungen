@@ -32,6 +32,26 @@ ArrayList::ArrayList(ArrayList&& other) : current_size(other.current_size) , arr
 	//NULL ist Makro (void*) 0 und nicht Nullptr
 }
 
+std::ostream& operator<<(std::ostream& o,const ArrayList& list){
+	for(int i=0;i<list.getSize();i++){
+		o<<list.array[i];
+	}
+	return NULL;
+}
+
+ArrayList::ArrayList& operator+(const ArrayList list){
+	ArrayList C;
+	C.current_size = this->current_size + list.current_size;
+	C.array = new int*();
+	for(int i=0; i<this->current_size;i++){
+		C.add(this->get(i));
+	}
+	for(int i=0; i<list.current_size;i++){
+		C.add(list.get(i));
+	}
+	return *C;
+}
+
 const int*
 ArrayList::getFirst() const
 {

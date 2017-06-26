@@ -4,12 +4,13 @@
 class ArrayList
 {
 public:
+  friend std::ostream&
   ArrayList();
   ~ArrayList();
   ArrayList(const ArrayList& a);
-  ArrayList& operator= (const ArrayList& rhs);
+  ArrayList operator<<(const ArrayList& list);
+  ArrayList& operator<<(const ArrayList& list);
   ArrayList(ArrayList&& other);
-  ArrayList& operator=(ArrayList&& other);
   const int* getFirst() const;
   const int* getLast() const;
   int getSize() const;
