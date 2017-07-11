@@ -4,12 +4,19 @@
 class ArrayList
 {
 public:
-  friend std::ostream&
+  friend std::ostream& operator<<(std::ostream& out_stream,const ArrayList& list);
+  /*friend -> diese Funktion darf auf die Internen Daten zugreifen, zusätzlich Deklaration
+   * eines Funktionsprototypen, der nicht zu unserer Klasse gehört(arraylist).
+   *  Eigentlich nur damit nicht der this Pointer von Arraylist übergeben wird
+   *  (linke Seite cout<<arrayList)
+   */
   ArrayList();
   ~ArrayList();
   ArrayList(const ArrayList& a);
-  ArrayList operator<<(const ArrayList& list);
-  ArrayList& operator<<(const ArrayList& list);
+  ArrayList operator+(const ArrayList& list) const;
+  ArrayList& operator+=(const ArrayList& rhs);
+  ArrayList operator-(const ArrayList& rhs);
+  ArrayList& operator-=(const ArrayList& rhs);
   ArrayList(ArrayList&& other);
   const int* getFirst() const;
   const int* getLast() const;

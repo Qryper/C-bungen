@@ -10,12 +10,17 @@ ArrayList::ArrayList() : current_size(0), array(nullptr)
   array = new int[1];
 }
 
+static int calculateNextPowerOfTwo(unsigned int number)
+{
+
+}
+
 ArrayList::~ArrayList()
 {
   delete[] array;
 }
 
-ArrayList::ArrayList(const ArrayList& a) : current_size(a.current_size), array(new int[current_size]){
+ArrayList::ArrayList(const ArrayList& a) : current_size(a.current_size), array(new int[calculateNextPowerOfTwo(a.current_size)]){
 /*	array = new int [a.current_size];
 	current_size = a.current_size;  */
 
@@ -32,25 +37,64 @@ ArrayList::ArrayList(ArrayList&& other) : current_size(other.current_size) , arr
 	//NULL ist Makro (void*) 0 und nicht Nullptr
 }
 
-std::ostream& operator<<(std::ostream& o,const ArrayList& list){
-	for(int i=0;i<list.getSize();i++){
-		o<<list.array[i];
+std::ostream& operator<<(std::ostream& out_stream,const ArrayList& list){
+	for(int i=0;i<list.current_size;i++){
+		out_stream << list.array[i] << ", ";
 	}
-	return NULL;
+	out_stream << *list.getLast() << std::endl;
 }
-
-ArrayList::ArrayList& operator+(const ArrayList list){
-	ArrayList C;
-	C.current_size = this->current_size + list.current_size;
-	C.array = new int*();
+/*
+ * Meine Impl.
+ArrayList::ArrayList operator+(const ArrayList rhs)const{
+	ArrayList new_List;
+	new_List.current_size = this->current_size + list.current_size;
+	new_List.array = new int*();
 	for(int i=0; i<this->current_size;i++){
-		C.add(this->get(i));
+		new_List.add(this->get(i));
 	}
 	for(int i=0; i<list.current_size;i++){
-		C.add(list.get(i));
+		new_List.add(list.get(i));
 	}
-	return *C;
+	return new_List;
 }
+*/
+
+ArrayList:: ArrayList operator+(const ArrayList rhs)const{ //rhs = right hand side
+	 ArrayList new_List;  // nicht dynamisch alloziert, da sonst expl. deleted werden muss
+	 new_List += *this;
+	 new_List += rhs;
+	 return new_List;
+ }
+
+ArrayList&
+ArrayList::operator+=(const ArrayList& rhs){
+	int new_size = rhs.current_size + current_size;
+	int capacity = calculateNextPowerOfTwo(new_size);
+	int new_array[] = new int[capacity];
+	std::copy(array, array+current_size, new_size);
+	std::copy(rhs.array, rhs.array+rhs.current_size, array+current_size);
+	delete[] array;
+	array = new_array;
+	current_size = new_size;
+	return *this;
+}
+
+ArrayList
+ArrayList::operator-(const ArrayList& rhs){
+
+}
+
+ArrayList&
+ArrayList::operator-=(const ArrayList& rhs){
+	for(int lhs_index = 0; lhs_index < current_size;lhs_index++){
+		for(int rhs_index = 0; rhs_index < rhs.current_size; rhs_index++){
+			if(array[lhs_index] == rhs.array[rhs_index]){
+				this->remove(lhs_index);
+			}
+		}
+	}
+}
+
 
 const int*
 ArrayList::getFirst() const
